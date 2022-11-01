@@ -1,0 +1,303 @@
+* {
+    box-sizing: border-box;
+    font-family: 'Ubuntu', sans-serif;
+}
+
+
+
+:root {
+    --main-color: rgb(40, 110, 167);
+    --accent-color: rgb(66, 153, 40);
+    --light-font-color: white;
+    --dark-font-color: rgb(53, 53, 53);
+    --light-bg-color: rgb(240, 240, 240);
+    --bg-color: white;
+}
+
+body.dark {
+    --main-color: rgb(12, 79, 134);
+    --accent-color: rgb(66, 153, 40);
+    --light-font-color: rgb(215, 222, 226);
+    --dark-font-color: black;
+    --light-bg-color: rgb(95, 106, 116);
+    --bg-color: rgb(48, 59, 68);
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--bg-color);
+    color: var(--dark-font-color);
+}
+
+
+
+
+/* header */
+header {
+    height: 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--main-color);
+    color: var(--light-font-color);
+    padding: 5px 30px;;
+}
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.logo {
+    font-family: 'Pacifico', cursive;
+    font-size: 29px;
+}
+
+.burger {
+    height: 20px;
+    width: 20px;
+    padding: 0;
+    border: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: transparent;
+    
+}
+.burger-line {
+    width: 20px;
+    height: 2px;
+    background-color: var(--light-font-color);
+    transition: all 0.3s;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+.mode {
+    display: flex;
+    gap: 8px;
+    background-color: var(--accent-color);
+    padding: 5px;
+    border-radius: 10px;
+    position: relative;
+}
+
+.sun,
+.moon,
+.toggle {
+    pointer-events: none;
+}
+.toggle {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 22px;
+    height: 22px;
+    border-radius: 10px;
+    background-color: var(--light-font-color);
+    transition: all 0.3s;
+}
+.on {
+    transform: translateX(22px); 
+}
+
+
+
+.burger-active .burger-line:nth-child(1){
+    transform: rotate(45deg) scaleX(1.3) translate(5px, 6px);    
+}
+.burger-active .burger-line:nth-child(2){
+    transform: rotate(-45deg) scaleX(1.3);    
+}
+.burger-active .burger-line:nth-child(3){
+    background-color: transparent;    
+}
+
+
+/* sidebar */
+.sidebar {
+    width: 300px;
+    position: fixed;
+    z-index: 100;
+    top: 60px;
+    background-color: var(--light-bg-color);
+    display: flex;
+    gap: 50px;
+    flex-direction: column;
+    min-height: calc(100vh - 60px);
+    padding: 50px 30px;
+    transition: all 0.3s;
+}
+.sidebar-hidden {
+    transform: translateX(-300px);
+}
+nav {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+nav i {
+    margin-right: 10px;
+    pointer-events: none;
+}
+.btn {
+    padding: 10px 20px;
+    text-align: left;
+    border: none;
+    border-radius: 10px;
+    background-color: var(--light-font-color);
+    color: var(--main-color);
+    cursor: pointer;
+}
+.btn:hover {
+    color: var(--accent-color);
+}
+.filter-active {
+    background-color: var(--main-color);
+    color: var(--light-font-color);
+}
+.filter-active:hover {
+    color: rgb(219, 219, 219);
+}
+
+.new-project {
+    background-color: var(--accent-color);
+    color: var(--light-font-color);
+    font-weight: bold;
+}
+.new-project:hover {
+    color: var(--light-font-color);
+    filter: opacity(0.7);
+}
+.new-project:active {
+    transform: scale(0.9);
+}
+
+.projects-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.projects {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+
+
+/* main */
+main {
+    transition: all 0.3s;
+}
+.pad-left {
+    padding-left: 300px;
+}
+
+.todo-container {
+    padding: 50px;
+    display: flex;
+    gap: 2px;
+    flex-direction: column;
+    align-items: center;
+}
+
+.todo-item {
+    display: grid;
+    position: relative;
+    grid-template-columns:20px 1fr 60px 90px 30px 30px;
+    align-self: stretch;
+    gap: 30px;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px;
+    background-color: var(--light-bg-color);
+    white-space: nowrap;
+}
+@media (max-width: 600px) {
+    .todo-container {
+        padding: 50px 0;
+    }
+
+    .todo-item {
+        gap: 20px;
+    }
+}
+
+
+
+.importance {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 5px;
+}
+
+.importance.high {
+    background-color: red;
+}
+.importance.mid {
+    background-color: orange;
+}
+.importance.low {
+    background-color: green;
+}
+
+
+.checkmark i {
+    width: 20px;
+    height: 20px;
+    border: 2px solid;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 2px;
+    background-color: var(--light-font-color);
+}
+.todo-desc {
+    overflow: hidden;
+}
+.details {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+    border: none;
+    border-radius: 5px;
+    background-color: var(--accent-color);
+    color: var(--light-font-color);
+}
+.details:hover,
+.edit:hover,
+.delete:hover {
+    filter: opacity(0.8);
+}
+.details:active,
+.edit:active,
+.delete:active {
+    transform: scale(0.9);
+}
+
+.delete,
+.edit {
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 5px;
+    background-color: var(--accent-color);
+    color: var(--light-font-color);
+}
+
+.edit i,
+.delete i {
+    font-size: 16px;
+    padding: 8px;
+}
