@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Pacifico&family=Ubuntu:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+    <script
+      src="https://kit.fontawesome.com/cc768ea391.js"
+      crossorigin="anonymous"
+    ></script>
+    <title>ToDo or not ToDo</title>
+  </head>
+  <body>
+    <header>
+      <div class="logo-container">
+        <button class="burger">
+          <div class="burger-line"></div>
+          <div class="burger-line"></div>
+          <div class="burger-line"></div>
+        </button>
+        <div class="logo">ToDoes</div>
+      </div>
+      <div class="user-info">
+        <div class="mode">
+          <div class="sun"><i class="fa-regular fa-sun"></i></div>
+          <div class="moon"><i class="fa-regular fa-moon"></i></div>
+          <div class="toggle on"></div>
+        </div>
+        <div>Sign-in</div>
+      </div>
+    </header>
+
+    <div id="content">
+      <div class="sidebar sidebar-hidden">
+        <nav>
+          <button class="btn filter-btn filter-active">
+            <i class="fa-solid fa-globe"></i> All
+          </button>
+          <button class="btn filter-btn">
+            <i class="fa-solid fa-calendar-day"></i> Today
+          </button>
+          <button class="btn filter-btn">
+            <i class="fa-solid fa-calendar-days"></i> This month
+          </button>
+          <button class="btn filter-btn">
+            <i class="fa-solid fa-calendar-plus"></i> Important
+          </button>
+          <button class="btn filter-btn">
+            <i class="fa-solid fa-calendar-check"></i> Completed
+          </button>
+        </nav>
+        <div class="projects-container">
+          <div class="projects-heading">
+            <h3>Projects:</h3>
+            <button class="btn new-project">New</button>
+          </div>
+          <div class="projects">
+            <button class="btn">Project 1</button>
+            <button class="btn">Project 2</button>
+            <button class="btn">Project 3</button>
+          </div>
+        </div>
+      </div>
+      <main>
+        <div class="todo-container">
+          <div class="todo-item">
+            <div class="importance high"></div>
+            <div class="checkmark"><i></i></div>
+            <div class="todo-desc">The plan is easy: We kill Batman</div>
+            <button class="details">Details</button>
+            <div class="due-date">Feb 31 2022</div>
+            <button class="edit">
+              <i class="fa-solid fa-pen-to-square"></i>
+            </button>
+            <button class="delete"><i class="fa-solid fa-trash"></i></button>
+          </div>
+
+          <div class="todo-item">
+            <div class="importance low"></div>
+            <div class="checkmark"><i></i></div>
+            <div class="todo-desc">Kill Batman</div>
+            <button class="details">Details</button>
+            <div class="due-date">Feb 31 2022</div>
+            <button class="edit">
+              <i class="fa-solid fa-pen-to-square"></i>
+            </button>
+            <button class="delete"><i class="fa-solid fa-trash"></i></button>
+          </div>
+
+          <div class="todo-item">
+            <div class="importance mid"></div>
+            <div class="checkmark"><i></i></div>
+            <div class="todo-desc">Kill Batman</div>
+            <button class="details">Details</button>
+            <div class="due-date">Feb 31 2022</div>
+            <button class="edit">
+              <i class="fa-solid fa-pen-to-square"></i>
+            </button>
+            <button class="delete"><i class="fa-solid fa-trash"></i></button>
+          </div>
+
+          <div class="todo-item">
+            <div class="importance high"></div>
+            <div class="checkmark"><i></i></div>
+            <div class="todo-desc">Kill Batman</div>
+            <button class="details">Details</button>
+            <div class="due-date">Feb 31 2022</div>
+            <button class="edit">
+              <i class="fa-solid fa-pen-to-square"></i>
+            </button>
+            <button class="delete"><i class="fa-solid fa-trash"></i></button>
+          </div>
+        </div>
+      </main>
+    </div>
+    <script src="./main.js"></script>
+  </body>
+</html>
