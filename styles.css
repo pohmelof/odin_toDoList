@@ -28,7 +28,13 @@ body {
     padding: 0;
     background-color: var(--bg-color);
     color: var(--dark-font-color);
+    transition: all 0.3s;
 }
+
+i {
+    pointer-events: none;
+}
+
 
 
 
@@ -36,6 +42,10 @@ body {
 /* header */
 header {
     height: 60px;
+    position: fixed;
+    z-index: 91;
+    left: 0;
+    right: 0;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -122,7 +132,7 @@ header {
 .sidebar {
     width: 300px;
     position: fixed;
-    z-index: 100;
+    z-index: 90;
     top: 60px;
     background-color: var(--light-bg-color);
     display: flex;
@@ -131,6 +141,7 @@ header {
     min-height: calc(100vh - 60px);
     padding: 50px 30px;
     transition: all 0.3s;
+    border-right: 2px solid var(--main-color);
 }
 .sidebar-hidden {
     transform: translateX(-300px);
@@ -152,6 +163,8 @@ nav i {
     background-color: var(--light-font-color);
     color: var(--main-color);
     cursor: pointer;
+    white-space: nowrap;
+    overflow: hidden;
 }
 .btn:hover {
     color: var(--accent-color);
@@ -169,13 +182,6 @@ nav i {
     color: var(--light-font-color);
     font-weight: bold;
 }
-.new-project:hover {
-    color: var(--light-font-color);
-    filter: opacity(0.7);
-}
-.new-project:active {
-    transform: scale(0.9);
-}
 
 .projects-heading {
     display: flex;
@@ -188,12 +194,25 @@ nav i {
     flex-direction: column;
     gap: 20px;
 }
+.projects div {
+    display: grid;
+    grid-template-columns: 1fr repeat(2, 35px);
+    gap: 5px;
+}
+.project-edit,
+.project-delete {
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
 
 
 /* main */
 main {
     transition: all 0.3s;
+    padding-top: 60px;
 }
 .pad-left {
     padding-left: 300px;
@@ -229,6 +248,24 @@ main {
     }
 }
 
+.new-todo {
+    font-size: 40px;
+    padding: 20px;
+    border-radius: 50%;
+    background-color: var(--accent-color);
+    color: var(--light-font-color);
+    border: 5px solid var(--bg-color);
+    position: fixed;
+    bottom: 50px;
+    right: 50px;
+
+}
+.new-todo i {
+    pointer-events: none;
+    width: 47px;
+    height: 44px;
+}
+
 
 
 .importance {
@@ -250,7 +287,7 @@ main {
 }
 
 
-.checkmark i {
+.checkmark  {
     width: 20px;
     height: 20px;
     border: 2px solid;
@@ -273,16 +310,6 @@ main {
     background-color: var(--accent-color);
     color: var(--light-font-color);
 }
-.details:hover,
-.edit:hover,
-.delete:hover {
-    filter: opacity(0.8);
-}
-.details:active,
-.edit:active,
-.delete:active {
-    transform: scale(0.9);
-}
 
 .delete,
 .edit {
@@ -300,4 +327,109 @@ main {
 .delete i {
     font-size: 16px;
     padding: 8px;
+}
+
+
+/* modal */
+
+.modal {
+    position: fixed;
+    z-index: 100;
+    background-color: var(--light-font-color);
+    color: var(--main-color);
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    padding: 30px;
+    border-radius: 10px;
+    border: 2px solid var(--main-color);
+    max-height: 100vh;
+}
+.modal-hidden {
+    display: none;
+}
+.modal input,
+.modal select,
+.modal textarea {
+    min-width: 400px;
+    padding: 10px;
+}
+.modal textarea {
+    resize: vertical;
+    max-height: 350px;
+}
+.modal p {
+    display: flex;
+    gap: 5px;
+    flex-direction:  column;
+}
+.modal h3 {
+    margin-top: 0;
+    text-align: center;
+}
+.submit {
+    background-color: var(--accent-color);
+    color: var(--light-font-color);
+    border:none;
+    border-radius: 5px;
+    font-weight: bold;
+    padding: 10px 25px;
+}
+.close {
+    width: 40px;
+    height: 40px;
+    font-size: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    border-radius: 50%;
+    background-color: var(--light-font-color);
+    color: var(--main-color);
+    border: 3px solid;
+    position: absolute;
+    top: -20px;
+    right: -20px;
+}
+.close:hover {
+    color: var(--accent-color);
+}
+
+
+.overlay {
+    background-color: var(--bg-color);
+    opacity: 0.5;
+    position: fixed;
+    z-index: 95;
+    top:0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+.overlay-hidden {
+    display: none;
+}
+
+/* hovers / actives */
+.details:hover,
+.edit:hover,
+.delete:hover,
+.new-todo:hover,
+.new-project:hover,
+.submit:hover {
+    filter: opacity(0.8);
+}
+.details:active,
+.edit:active,
+.delete:active,
+.new-todo:active,
+.new-project:active,
+.project-edit:active,
+.project-delete:active,
+.submit:active,
+.close:active {
+    transform: scale(0.9);
+}
+.new-project:hover {
+    color: var(--light-font-color);
 }
