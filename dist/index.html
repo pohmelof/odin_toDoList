@@ -38,87 +38,12 @@
     </header>
 
     <div id="content">
-      <div class="sidebar sidebar-hidden">
-        <nav>
-          <button class="btn filter-btn filter-active">
-            <i class="fa-solid fa-globe"></i> All
-          </button>
-          <button class="btn filter-btn">
-            <i class="fa-solid fa-calendar-day"></i> Today
-          </button>
-          <button class="btn filter-btn">
-            <i class="fa-solid fa-calendar-days"></i> This month
-          </button>
-          <button class="btn filter-btn">
-            <i class="fa-solid fa-calendar-plus"></i> Important
-          </button>
-          <button class="btn filter-btn">
-            <i class="fa-solid fa-calendar-check"></i> Completed
-          </button>
-        </nav>
-        <div class="projects-container">
-          <div class="projects-heading">
-            <h3>Projects:</h3>
-            <button class="btn new-project">New</button>
-          </div>
-          <div class="projects">
-            <button class="btn">Project 1</button>
-            <button class="btn">Project 2</button>
-            <button class="btn">Project 3</button>
-          </div>
-        </div>
-      </div>
       <main>
-        <div class="todo-container">
-          <div class="todo-item">
-            <div class="importance high"></div>
-            <div class="checkmark"><i></i></div>
-            <div class="todo-desc">The plan is easy: We kill Batman</div>
-            <button class="details">Details</button>
-            <div class="due-date">Feb 31 2022</div>
-            <button class="edit">
-              <i class="fa-solid fa-pen-to-square"></i>
-            </button>
-            <button class="delete"><i class="fa-solid fa-trash"></i></button>
-          </div>
-
-          <div class="todo-item">
-            <div class="importance low"></div>
-            <div class="checkmark"><i></i></div>
-            <div class="todo-desc">Kill Batman</div>
-            <button class="details">Details</button>
-            <div class="due-date">Feb 31 2022</div>
-            <button class="edit">
-              <i class="fa-solid fa-pen-to-square"></i>
-            </button>
-            <button class="delete"><i class="fa-solid fa-trash"></i></button>
-          </div>
-
-          <div class="todo-item">
-            <div class="importance mid"></div>
-            <div class="checkmark"><i></i></div>
-            <div class="todo-desc">Kill Batman</div>
-            <button class="details">Details</button>
-            <div class="due-date">Feb 31 2022</div>
-            <button class="edit">
-              <i class="fa-solid fa-pen-to-square"></i>
-            </button>
-            <button class="delete"><i class="fa-solid fa-trash"></i></button>
-          </div>
-
-          <div class="todo-item">
-            <div class="importance high"></div>
-            <div class="checkmark"><i></i></div>
-            <div class="todo-desc">Kill Batman</div>
-            <button class="details">Details</button>
-            <div class="due-date">Feb 31 2022</div>
-            <button class="edit">
-              <i class="fa-solid fa-pen-to-square"></i>
-            </button>
-            <button class="delete"><i class="fa-solid fa-trash"></i></button>
-          </div>
-        </div>
+        <div class="todo-container"></div>
+        <button class="new-todo"><i class="fa-solid fa-plus"></i></button>
       </main>
+      <div class="modal-container modal-hidden"></div>
+      <div class="overlay overlay-hidden"></div>
     </div>
     <script src="./main.js"></script>
   </body>

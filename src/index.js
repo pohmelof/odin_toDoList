@@ -1,55 +1,66 @@
-const burger = document.querySelector(".burger");
-const sidebar = document.querySelector(".sidebar");
-const main = document.querySelector("main");
+import { dom, renderTodoes } from "./dom";
+import { createToDo, toDoProto } from "./todo";
+import shit from "./modal-todo";
+import formData from "./getFormData";
+import todoElement from "./todo-element";
+import { sidebar } from "./sidebar";
+import { nanoid } from "nanoid";
 
-burger.addEventListener("click", () => {
-  burger.classList.toggle("burger-active");
-  sidebar.classList.toggle("sidebar-hidden");
-  if (window.innerWidth > 800) {
-    main.classList.toggle("pad-left");
-  } else {
-    main.classList.remove("pad-left");
-  }
-});
+export const projects = [
+  {
+    name: "Default",
+    id: "default",
+  },
+  {
+    name: "Learn everything",
+    id: nanoid(8),
+  },
+];
 
-window.addEventListener("resize", () => {
-  burger.classList.remove("burger-active");
-  sidebar.classList.add("sidebar-hidden");
-  main.classList.remove("pad-left");
-});
-window.addEventListener("DOMContentLoaded", () => {
-  if (window.innerWidth > 800) {
-    burger.classList.add("burger-active");
-    sidebar.classList.remove("sidebar-hidden");
-    main.classList.add("pad-left");
-  }
-});
+export const todosArray = [
+  {
+    title: "kill batman",
+    desc: "none",
+    date: "2022-12-08",
+    priority: "mid",
+    completed: false,
+    project: "id2342",
+  },
+  {
+    title: "kill batman",
+    desc: "none",
+    date: "2022-12-08",
+    priority: "low",
+    completed: false,
+    project: "id2342",
+  },
+  {
+    title: "kill batman",
+    desc: "none",
+    date: "2022-12-08",
+    priority: "high",
+    completed: true,
+    project: "id2342",
+  },
+  {
+    title: "kill batman",
+    desc: "none",
+    date: "2022-12-08",
+    priority: "low",
+    completed: false,
+    project: "id2342",
+  },
+];
 
-const checkmarks = document.querySelectorAll(".checkmark");
+todosArray.forEach((item) => Object.assign(item, toDoProto));
 
-checkmarks.forEach((item) =>
-  item.addEventListener("click", (e) => {
-    if (e.target.classList.contains("fa-solid", "fa-check")) {
-      e.target.classList.remove("fa-solid", "fa-check");
-    } else {
-      e.target.classList.add("fa-solid", "fa-check");
-    }
-  })
-);
+console.log(todosArray);
+renderTodoes(todosArray);
 
-const filterBtns = document.querySelectorAll(".filter-btn");
+const modalCont = document.querySelector(".modal-container");
 
-filterBtns.forEach((item) =>
-  item.addEventListener("click", (e) => {
-    filterBtns.forEach((item) => item.classList.remove("filter-active"));
-    e.target.classList.add("filter-active");
-  })
-);
+modalCont.appendChild(shit(projects));
 
-const modeBtn = document.querySelector(".mode");
-const toggle = document.querySelector(".toggle");
+document.getElementById("content").prepend(sidebar(projects));
 
-modeBtn.addEventListener("click", (e) => {
-  toggle.classList.toggle("on");
-  document.body.classList.toggle("dark");
-});
+dom();
