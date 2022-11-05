@@ -1,4 +1,4 @@
-export default function newToDo(arr, index) {
+export default function newToDo(arr, index, edit = false) {
   const modal = document.createElement("div");
   const h3 = document.createElement("h3");
   const form = document.createElement("form");
@@ -9,13 +9,13 @@ export default function newToDo(arr, index) {
   const submitBtn = document.createElement("button");
 
   modal.classList.add("modal");
-  h3.textContent = "Create a new Todo";
+  h3.textContent = edit ? "Edit Todo" : "Create new Todo";
   form.action = "#";
   form.method = "post";
   form.dataset.index = index;
   submitBtn.classList.add("submit");
   submitBtn.type = "submit";
-  submitBtn.innerText = "Add";
+  submitBtn.innerText = edit ? "Save" : "Add";
   closeBtn.classList.add("close");
   closeBtn.type = "button";
   closeBtn.innerHTML = "&#10005;";

@@ -9,6 +9,9 @@ const toDoProto = {
   complete() {
     this.completed = !this.completed;
   },
+  delete(arr) {
+    arr.splice(arr.indexOf(this), 1);
+  },
 };
 
 const createToDo = (obj) => {

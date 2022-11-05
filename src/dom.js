@@ -4,83 +4,21 @@ import details from "./details";
 import newToDo from "./modal-todo";
 import { createToDo } from "./todo";
 import formData from "./getFormData";
+import modalNewProject from "./modal-newProject";
+import { createProject } from "./project";
+import { sidebar, filterTodos } from "./sidebar";
+import deleteWarning from "./delete-warning";
 
 export const dom = () => {
   // toggle sidebar and burger menu icon
-  const burger = document.querySelector(".burger");
-  const sidebar = document.querySelector(".sidebar");
-  const main = document.querySelector("main");
-
-  burger.addEventListener("click", () => {
-    burger.classList.toggle("burger-active");
-    sidebar.classList.toggle("sidebar-hidden");
-    if (window.innerWidth > 800) {
-      main.classList.toggle("pad-left");
-    } else {
-      main.classList.remove("pad-left");
-    }
-  });
-  // if window resized, reset sidebar status
-  window.addEventListener("resize", () => {
-    burger.classList.remove("burger-active");
-    sidebar.classList.add("sidebar-hidden");
-    main.classList.remove("pad-left");
-  });
-  //  if window width more than 800px, show sidebar on load
-  window.addEventListener("DOMContentLoaded", () => {
-    if (window.innerWidth > 800) {
-      burger.classList.add("burger-active");
-      sidebar.classList.remove("sidebar-hidden");
-      main.classList.add("pad-left");
-    }
-  });
+  sidebarToggle();
 
   // filter buttons
-  const filterBtns = document.querySelectorAll(".filter-btn");
-
-  function filterTodos(arr, arg) {
-    const date = new Date();
-    if (arg === "all") {
-      renderTodoes(todosArray);
-    } else if (arg === "today") {
-      const today = `${date.getFullYear()}-${
-        date.getMonth() + 1 <= 9
-          ? "0" + (date.getMonth() + 1)
-          : date.getMonth() + 1
-      }-${date.getDate() <= 9 ? "0" + date.getDate() : date.getDate()}`;
-      const output = arr.filter((item) => item.date === today);
-      renderTodoes(output);
-    } else if (arg === "month") {
-      const month = date.getMonth() + 1;
-      const output = arr.filter(
-        (item) => parseInt(item.date.split("-")[1]) === month
-      );
-      renderTodoes(output);
-    } else if (arg === "important") {
-      const output = arr.filter((item) => item.priority === "high");
-      renderTodoes(output);
-    } else if (arg === "completed") {
-      const output = arr.filter((item) => item.completed);
-      renderTodoes(output);
-    }
-  }
-
-  filterBtns.forEach((item) =>
-    item.addEventListener("click", (e) => {
-      filterBtns.forEach((item) => item.classList.remove("filter-active"));
-      e.target.classList.add("filter-active");
-      filterTodos(todosArray, e.target.dataset.filter);
-    })
-  );
+  _addFilterButtons();
+  _addProjectsButtons(projects, todosArray);
 
   //   night mode toggle
-  const modeBtn = document.querySelector(".mode");
-  const toggle = document.querySelector(".toggle");
-
-  modeBtn.addEventListener("click", (e) => {
-    toggle.classList.toggle("on");
-    document.body.classList.toggle("dark");
-  });
+  _toggleNightMode();
 
   //   new todo
 
@@ -88,19 +26,59 @@ export const dom = () => {
   closeModalBtn();
 };
 
+function _toggleNightMode() {
+  const modeBtn = document.querySelector(".mode");
+  const toggle = document.querySelector(".toggle");
+
+  modeBtn.addEventListener("click", (e) => {
+    toggle.classList.toggle("on");
+    document.body.classList.toggle("dark");
+  });
+}
+
+// filter todos on change if one of the filter buttons was pressed
+function _filterOnChange(arr) {
+  const filterBtns = [...document.querySelectorAll(".filter-btn")];
+  //   get button with active class
+  const activeBtn = filterBtns.filter((item) =>
+    item.classList.contains("filter-active")
+  )[0];
+  switch (activeBtn.dataset.filter) {
+    case "completed":
+      filterTodos(arr, "completed");
+      break;
+    case "today":
+      filterTodos(arr, "today");
+      break;
+    case "month":
+      filterTodos(arr, "month");
+      break;
+    case "important":
+      filterTodos(arr, "important");
+      break;
+  }
+}
+
 // close modal button
 const modalCont = document.querySelector(".modal-container");
 const overlay = document.querySelector(".overlay");
 
-function closeModalBtn() {
+export function closeModalBtn() {
   const closeModalBtn = document.querySelector(".close");
   closeModalBtn.addEventListener("click", () => {
-    modalCont.classList.add("modal-hidden");
-    overlay.classList.add("overlay-hidden");
+    hideModal();
+  });
+  overlay.addEventListener("click", () => {
+    hideModal();
   });
 }
 
-function showModal() {
+export function hideModal() {
+  modalCont.classList.add("modal-hidden");
+  overlay.classList.add("overlay-hidden");
+}
+
+export function showModal() {
   modalCont.classList.remove("modal-hidden");
   overlay.classList.remove("overlay-hidden");
 }
@@ -115,6 +93,7 @@ function addTodo() {
     todosArray.push(todo);
     renderTodoes(todosArray);
     submitForm.reset();
+    hideModal();
   });
 }
 
@@ -129,8 +108,92 @@ function newTodo() {
   });
 }
 
+// function newProject(projectsArr, todoArr) {
+//   const form = document.querySelector("form");
+//   const projectName = document.getElementById("newProject");
+//   form.addEventListener("submit", (e) => {
+//     e.preventDefault();
+//     const newProject = createProject(projectName.value);
+//     projectsArr.push(newProject);
+//     renderSidebar(projectsArr, todoArr);
+//     hideModal();
+//   });
+// }
+
+// function _addProjectsButtons(projectsArr, todoArr) {
+//   const selectBtns = document.querySelectorAll(".project-select");
+//   const filterBtns = document.querySelectorAll(".filter-btn");
+//   const editBtns = document.querySelectorAll(".project-edit");
+//   const deleteBtns = document.querySelectorAll(".project-delete");
+
+//   const newProjectBtn = document.querySelector(".new-project");
+//   newProjectBtn.addEventListener("click", (e) => {
+//     modalCont.innerHTML = "";
+//     modalCont.appendChild(modalNewProject());
+//     newProject(projectsArr, todoArr);
+//     closeModalBtn();
+//     showModal();
+//   });
+
+//   selectBtns.forEach((item) =>
+//     item.addEventListener("click", (e) => {
+//       const project = projectsArr.filter(
+//         (item) => item.id === e.target.dataset.id
+//       )[0];
+//       console.log(project);
+//       selectBtns.forEach((item) => item.classList.remove("filter-active"));
+//       filterBtns.forEach((item) => item.classList.remove("filter-active"));
+//       e.target.classList.add("filter-active");
+//       project.updateProjectContents(todoArr);
+//       renderTodoes(project.contents);
+//     })
+//   );
+
+//   editBtns.forEach((item) =>
+//     item.addEventListener("click", (e) => {
+//       const index = e.target.dataset.index;
+//       const edit = true;
+//       modalCont.innerHTML = "";
+//       modalCont.appendChild(modalNewProject(index, edit));
+//       const form = document.querySelector("form");
+//       document.querySelector(".newProject").value = projectsArr[index].name;
+
+//       form.addEventListener("submit", (e) => {
+//         e.preventDefault();
+//         projectsArr[index].edit(document.querySelector(".newProject").value);
+//         renderSidebar(projectsArr, todoArr);
+//         hideModal();
+//       });
+
+//       closeModalBtn();
+//       showModal();
+//     })
+//   );
+
+//   deleteBtns.forEach((item) =>
+//     item.addEventListener("click", (e) => {
+//       const index = e.target.dataset.index;
+//       const id = e.target.dataset.id;
+//       modalCont.innerHTML = "";
+//       modalCont.appendChild(deleteWarning());
+//       showModal();
+//       const deleteBtn = document.querySelector(".modal-deleteBtn");
+//       const cancelBtn = document.querySelector(".modal-cancel");
+//       cancelBtn.addEventListener("click", (e) => {
+//         hideModal();
+//       });
+//       deleteBtn.addEventListener("click", (e) => {
+//         projectsArr[index].delete(projectsArr, todoArr, index, id);
+//         renderTodoes(todoArr);
+//         renderSidebar(projectsArr, todoArr);
+//         hideModal();
+//       });
+//     })
+//   );
+// }
+
 //populate modal with info to edit it
-function populateModal(obj) {
+function _populateModal(obj) {
   const title = document.getElementById("title");
   const desc = document.getElementById("desc");
   const date = document.getElementById("date");
@@ -160,6 +223,7 @@ function _addTodoButtons(arr) {
       } else {
         e.target.innerHTML = "";
         arr[index].complete();
+        _filterOnChange(arr);
       }
     })
   );
@@ -167,7 +231,6 @@ function _addTodoButtons(arr) {
   detailsBtns.forEach((item) =>
     item.addEventListener("click", (e) => {
       const index = e.target.dataset.index;
-      console.log(arr[e.target.dataset.index].desc);
       modalCont.innerHTML = "";
       modalCont.appendChild(details(arr[index]));
       showModal();
@@ -179,16 +242,19 @@ function _addTodoButtons(arr) {
     item.addEventListener("click", (e) => {
       const index = e.target.dataset.index;
       modalCont.innerHTML = "";
-      modalCont.appendChild(newToDo(projects, index));
+      const edit = true;
+      modalCont.appendChild(newToDo(projects, index, edit));
       const submitForm = document.querySelector("form");
 
       submitForm.addEventListener("submit", (e) => {
         e.preventDefault();
         arr[index].edit(formData());
         renderTodoes(arr);
+        _filterOnChange(arr);
+        hideModal();
       });
       closeModalBtn();
-      populateModal(arr[e.target.dataset.index]);
+      _populateModal(arr[e.target.dataset.index]);
       showModal();
     })
   );
@@ -196,7 +262,7 @@ function _addTodoButtons(arr) {
   deleteBtns.forEach((item) =>
     item.addEventListener("click", (e) => {
       const index = e.target.dataset.index;
-      arr.splice(index, 1);
+      arr[index].delete(arr);
       renderTodoes(arr);
     })
   );
@@ -212,3 +278,17 @@ export function renderTodoes(arr) {
   }
   _addTodoButtons(arr);
 }
+
+// function renderSidebar(projectArr, todoArr) {
+//   if (
+//     document
+//       .getElementById("content")
+//       .firstElementChild.classList.contains("sidebar")
+//   ) {
+//     document.getElementById("content").firstElementChild.remove();
+//   }
+//   document.getElementById("content").prepend(sidebar(projectArr));
+//   sidebarToggle();
+//   _addFilterButtons();
+//   _addProjectsButtons(projectArr, todoArr);
+// }

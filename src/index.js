@@ -1,66 +1,70 @@
 import { dom, renderTodoes } from "./dom";
-import { createToDo, toDoProto } from "./todo";
-import shit from "./modal-todo";
+import { toDoProto } from "./todo";
+import newToDo from "./modal-todo";
 import formData from "./getFormData";
 import todoElement from "./todo-element";
-import { sidebar } from "./sidebar";
-import { nanoid } from "nanoid";
+import { sidebar, renderSidebar } from "./sidebar";
+import { projectProto } from "./project";
 
 export const projects = [
   {
     name: "Default",
     id: "default",
+    contents: [],
   },
   {
     name: "Learn everything",
-    id: nanoid(8),
+    id: "justDoIt",
+    contents: [],
   },
 ];
 
 export const todosArray = [
   {
-    title: "kill batman",
+    title: "Kill Batman",
     desc: "none",
-    date: "2022-12-08",
+    date: "2021-12-08",
     priority: "mid",
     completed: false,
-    project: "id2342",
+    project: "default",
   },
   {
-    title: "kill batman",
+    title: "Save Batman",
     desc: "none",
     date: "2022-12-08",
     priority: "low",
     completed: false,
-    project: "id2342",
+    project: "justDoIt",
   },
   {
-    title: "kill batman",
+    title: "Become Batman",
     desc: "none",
-    date: "2022-12-08",
+    date: "2023-12-08",
     priority: "high",
     completed: true,
-    project: "id2342",
+    project: "justDoIt",
   },
   {
-    title: "kill batman",
+    title: "Stop being Batman",
     desc: "none",
-    date: "2022-12-08",
+    date: "2024-12-08",
     priority: "low",
     completed: false,
-    project: "id2342",
+    project: "default",
   },
 ];
 
+projects.forEach((item) => Object.assign(item, projectProto));
+
 todosArray.forEach((item) => Object.assign(item, toDoProto));
 
-console.log(todosArray);
 renderTodoes(todosArray);
 
 const modalCont = document.querySelector(".modal-container");
 
-modalCont.appendChild(shit(projects));
+modalCont.appendChild(newToDo(projects));
 
-document.getElementById("content").prepend(sidebar(projects));
+renderSidebar(projects, todosArray);
+// document.getElementById("content").prepend(sidebar(projects));
 
 dom();
