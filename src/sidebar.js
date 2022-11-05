@@ -2,7 +2,9 @@ import { todosArray, projects } from "./index";
 import modalNewProject from "./modal-newProject";
 import { createProject } from "./project";
 import deleteWarning from "./delete-warning";
-import { renderTodoes, closeModalBtn, showModal, hideModal } from "./dom";
+import { renderTodoes } from "./todo-element";
+import { closeModalBtn, showModal, hideModal, modalCont } from "./dom";
+import { saveProjectsToLocalStorage } from "./localStorage";
 
 const filterButtons = [
   {
@@ -106,7 +108,7 @@ function projectsEl(arr) {
 // create sidebar element
 export function sidebar(arr) {
   const sidebar = document.createElement("div");
-  sidebar.className = "sidebar";
+  sidebar.classList.add("sidebar");
 
   sidebar.append(navEl(), projectsEl(arr));
 
@@ -114,8 +116,6 @@ export function sidebar(arr) {
 }
 
 //  add sidebar functionality
-
-const modalCont = document.querySelector(".modal-container");
 
 // filter todos functionality
 function _addFilterButtons() {
@@ -165,18 +165,25 @@ function _sidebarToggle() {
   const burger = document.querySelector(".burger");
   const sidebar = document.querySelector(".sidebar");
   const main = document.querySelector("main");
+  const mobileOverlay = document.querySelector(".overlay-mobile");
 
   burger.addEventListener("click", () => {
     if (sidebar.classList.contains("sidebar-hidden")) {
       burger.classList.add("burger-active");
       sidebar.classList.remove("sidebar-hidden");
-      window.innerWidth > 800
-        ? main.classList.add("pad-left")
-        : main.classList.remove("pad-left");
+      if (window.innerWidth > 800) {
+        main.classList.add("pad-left");
+      } else {
+        main.classList.remove("pad-left");
+        mobileOverlay.classList.remove("overlay-hidden");
+      }
     } else {
       burger.classList.remove("burger-active");
       sidebar.classList.add("sidebar-hidden");
       main.classList.remove("pad-left");
+      if (window.innerWidth < 800) {
+        mobileOverlay.classList.add("overlay-hidden");
+      }
     }
   });
   // if window resized, reset sidebar status
@@ -185,13 +192,14 @@ function _sidebarToggle() {
     sidebar.classList.add("sidebar-hidden");
     main.classList.remove("pad-left");
   });
+
   //  if window width more than 800px, show sidebar on load
   //   (won't auto show sidebar on mobile)
   window.addEventListener("DOMContentLoaded", () => {
-    if (window.innerWidth > 800) {
-      burger.classList.add("burger-active");
-      sidebar.classList.remove("sidebar-hidden");
-      main.classList.add("pad-left");
+    if (window.innerWidth < 800) {
+      burger.classList.remove("burger-active");
+      sidebar.classList.add("sidebar-hidden");
+      main.classList.remove("pad-left");
     }
   });
 }
@@ -204,6 +212,7 @@ function _newProject(projectsArr, todoArr) {
     e.preventDefault();
     const newProject = createProject(projectName.value);
     projectsArr.push(newProject);
+    saveProjectsToLocalStorage(projectsArr);
     renderSidebar(projectsArr, todoArr);
     hideModal();
   });
@@ -256,6 +265,7 @@ function _addProjectsButtons(projectsArr, todoArr) {
         e.preventDefault();
         projectsArr[index].edit(document.querySelector(".newProject").value);
         renderSidebar(projectsArr, todoArr);
+        saveProjectsToLocalStorage();
         hideModal();
       });
 
@@ -280,6 +290,7 @@ function _addProjectsButtons(projectsArr, todoArr) {
         projectsArr[index].delete(projectsArr, todoArr, index, id);
         renderTodoes(todoArr);
         renderSidebar(projectsArr, todoArr);
+        saveProjectsToLocalStorage(projectsArr);
         hideModal();
       });
     })

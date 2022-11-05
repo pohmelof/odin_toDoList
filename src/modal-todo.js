@@ -1,4 +1,4 @@
-export default function newToDo(arr, index, edit = false) {
+export function todoModal(arr, index, edit = false) {
   const modal = document.createElement("div");
   const h3 = document.createElement("h3");
   const form = document.createElement("form");

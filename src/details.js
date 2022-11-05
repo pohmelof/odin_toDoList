@@ -1,4 +1,4 @@
-export default function detailsModal(obj) {
+export function detailsModal(obj) {
   const modal = document.createElement("div");
   const h2 = document.createElement("h2");
   const closeBtn = document.createElement("button");

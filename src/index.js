@@ -1,12 +1,15 @@
-import { dom, renderTodoes } from "./dom";
+import { dom } from "./dom";
 import { toDoProto } from "./todo";
-import newToDo from "./modal-todo";
-import formData from "./getFormData";
-import todoElement from "./todo-element";
-import { sidebar, renderSidebar } from "./sidebar";
+import { todoModal } from "./modal-todo";
+import { renderTodoes } from "./todo-element";
+import { renderSidebar } from "./sidebar";
 import { projectProto } from "./project";
+import {
+  getProjectsFromLocalStorage,
+  getTodosFromLocalStorage,
+} from "./localStorage";
 
-export const projects = [
+export let projects = [
   {
     name: "Default",
     id: "default",
@@ -19,7 +22,7 @@ export const projects = [
   },
 ];
 
-export const todosArray = [
+export let todosArray = [
   {
     title: "Kill Batman",
     desc: "none",
@@ -57,14 +60,19 @@ export const todosArray = [
 projects.forEach((item) => Object.assign(item, projectProto));
 
 todosArray.forEach((item) => Object.assign(item, toDoProto));
+if (localStorage.getItem("projects") !== null) {
+  projects = getProjectsFromLocalStorage();
+}
+if (localStorage.getItem("todos") !== null) {
+  todosArray = getTodosFromLocalStorage();
+}
 
+console.log(projects);
+console.log(todosArray);
+
+renderSidebar(projects, todosArray);
 renderTodoes(todosArray);
 
 const modalCont = document.querySelector(".modal-container");
-
-modalCont.appendChild(newToDo(projects));
-
-renderSidebar(projects, todosArray);
-// document.getElementById("content").prepend(sidebar(projects));
-
+modalCont.appendChild(todoModal(projects));
 dom();
