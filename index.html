@@ -20,7 +20,7 @@
   <body>
     <header>
       <div class="logo-container">
-        <button class="burger">
+        <button class="burger burger-active">
           <div class="burger-line"></div>
           <div class="burger-line"></div>
           <div class="burger-line"></div>
@@ -38,12 +38,13 @@
     </header>
 
     <div id="content">
-      <main>
+      <main class="pad-left">
         <div class="todo-container"></div>
         <button class="new-todo"><i class="fa-solid fa-plus"></i></button>
       </main>
       <div class="modal-container modal-hidden"></div>
       <div class="overlay overlay-hidden"></div>
+      <div class="overlay-mobile overlay-hidden"></div>
     </div>
     <script src="./main.js"></script>
   </body>
