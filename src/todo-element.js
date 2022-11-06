@@ -1,4 +1,3 @@
-import { todosArray, projects } from "./index";
 import { closeModalBtn, showModal, hideModal, modalCont } from "./dom";
 import { filterTodos } from "./sidebar";
 import { todoModal } from "./modal-todo";
@@ -67,7 +66,7 @@ function todoElement(obj, index) {
 }
 
 // filter todoes if they are changed and filter button is pressed
-function _filterOnChange(arr) {
+export function filterOnChange(arr) {
   const filterBtns = [...document.querySelectorAll(".filter-btn")];
   //   get button with active class
   const activeBtn = filterBtns.filter((item) =>
@@ -105,7 +104,7 @@ function _populateModal(obj) {
 }
 
 //   todo buttons functionality
-function _addTodoButtons(todoArr) {
+function _addTodoButtons(todoArr, projectsArr) {
   const checkmarkBtns = document.querySelectorAll(".checkmark");
   const detailsBtns = document.querySelectorAll(".details");
   const editBtns = document.querySelectorAll(".edit");
@@ -124,7 +123,7 @@ function _addTodoButtons(todoArr) {
         e.target.parentNode.classList.remove("todo-completed");
         todoArr[index].complete();
         saveTodosToLocalStorage(todoArr);
-        _filterOnChange(todoArr);
+        filterOnChange(todoArr);
       }
     })
   );
@@ -144,7 +143,7 @@ function _addTodoButtons(todoArr) {
       const index = e.target.dataset.index;
       modalCont.innerHTML = "";
       const edit = true;
-      modalCont.appendChild(todoModal(projects, index, edit));
+      modalCont.appendChild(todoModal(projectsArr, index, edit));
       const submitForm = document.querySelector("form");
 
       submitForm.addEventListener("submit", (e) => {
@@ -165,6 +164,7 @@ function _addTodoButtons(todoArr) {
     item.addEventListener("click", (e) => {
       const index = e.target.dataset.index;
       todoArr[index].delete(todoArr);
+
       saveTodosToLocalStorage(todoArr);
       renderTodoes(todoArr);
     })
@@ -172,12 +172,12 @@ function _addTodoButtons(todoArr) {
 }
 
 // render todoes and add buttons functionality
-export function renderTodoes(todoArr) {
+export function renderTodoes(todoArr, projectsArr) {
   const todoCont = document.querySelector(".todo-container");
   todoCont.innerHTML = "";
   for (const item of todoArr) {
     const index = todoArr.indexOf(item);
     todoCont.appendChild(todoElement(item, index));
   }
-  _addTodoButtons(todoArr);
+  _addTodoButtons(todoArr, projectsArr);
 }

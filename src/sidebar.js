@@ -1,10 +1,12 @@
-import { todosArray, projects } from "./index";
 import modalNewProject from "./modal-newProject";
 import { createProject } from "./project";
 import deleteWarning from "./delete-warning";
 import { renderTodoes } from "./todo-element";
 import { closeModalBtn, showModal, hideModal, modalCont } from "./dom";
-import { saveProjectsToLocalStorage } from "./localStorage";
+import {
+  saveProjectsToLocalStorage,
+  saveTodosToLocalStorage,
+} from "./localStorage";
 
 const filterButtons = [
   {
@@ -118,7 +120,7 @@ export function sidebar(arr) {
 //  add sidebar functionality
 
 // filter todos functionality
-function _addFilterButtons() {
+function _addFilterButtons(todoArr) {
   const filterBtns = document.querySelectorAll(".filter-btn");
   const selectBtns = document.querySelectorAll(".project-select");
 
@@ -127,7 +129,7 @@ function _addFilterButtons() {
       filterBtns.forEach((item) => item.classList.remove("filter-active"));
       selectBtns.forEach((item) => item.classList.remove("filter-active"));
       e.target.classList.add("filter-active");
-      filterTodos(todosArray, e.target.dataset.filter);
+      filterTodos(todoArr, e.target.dataset.filter);
     })
   );
 }
@@ -135,7 +137,7 @@ function _addFilterButtons() {
 export function filterTodos(arr, arg) {
   const date = new Date();
   if (arg === "all") {
-    renderTodoes(todosArray);
+    renderTodoes(arr);
   } else if (arg === "today") {
     const today = `${date.getFullYear()}-${
       date.getMonth() + 1 <= 9
@@ -252,6 +254,7 @@ function _addProjectsButtons(projectsArr, todoArr) {
       //   filter all todos and show only those that have id of the project,
       //    save them into project object contents
       project.updateProjectContents(todoArr);
+      saveProjectsToLocalStorage(projectsArr);
       renderTodoes(project.contents);
     })
   );
@@ -271,7 +274,7 @@ function _addProjectsButtons(projectsArr, todoArr) {
         e.preventDefault();
         projectsArr[index].edit(document.querySelector(".newProject").value);
         renderSidebar(projectsArr, todoArr);
-        saveProjectsToLocalStorage();
+        saveProjectsToLocalStorage(projectsArr);
         hideModal();
       });
 
@@ -297,6 +300,7 @@ function _addProjectsButtons(projectsArr, todoArr) {
         renderTodoes(todoArr);
         renderSidebar(projectsArr, todoArr);
         saveProjectsToLocalStorage(projectsArr);
+        saveTodosToLocalStorage(todoArr);
         hideModal();
       });
     })
@@ -316,6 +320,6 @@ export function renderSidebar(projectArr, todoArr) {
   //   append sidebar as first child of content element
   document.getElementById("content").prepend(sidebar(projectArr));
   _sidebarToggle();
-  _addFilterButtons();
+  _addFilterButtons(todoArr);
   _addProjectsButtons(projectArr, todoArr);
 }

@@ -1,15 +1,16 @@
-import { todosArray, projects } from "./index";
 import { todoModal } from "./modal-todo";
 import { createToDo } from "./todo";
 import formData from "./getFormData";
 import { renderTodoes } from "./todo-element";
 import { saveTodosToLocalStorage } from "./localStorage";
+import { renderSidebar } from "./sidebar";
+import { filterOnChange } from "./todo-element";
 
-export const dom = () => {
+export const dom = (projectsArr, todoArr) => {
   //   night mode toggle
   _toggleNightMode();
   //   new todo
-  newTodo(projects, todosArray);
+  newTodo(projectsArr, todoArr);
   //   button to close modal
   closeModalBtn();
 };
@@ -68,7 +69,7 @@ function addTodo(projectsArr, todoArr) {
       submitForm.reset();
       hideModal();
     } else {
-      renderTodoes(todoArr);
+      filterOnChange(todoArr);
       submitForm.reset();
       hideModal();
     }
