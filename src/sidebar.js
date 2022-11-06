@@ -120,7 +120,7 @@ export function sidebar(arr) {
 //  add sidebar functionality
 
 // filter todos functionality
-function _addFilterButtons(todoArr) {
+function _addFilterButtons(todoArr, projectArr) {
   const filterBtns = document.querySelectorAll(".filter-btn");
   const selectBtns = document.querySelectorAll(".project-select");
 
@@ -129,35 +129,35 @@ function _addFilterButtons(todoArr) {
       filterBtns.forEach((item) => item.classList.remove("filter-active"));
       selectBtns.forEach((item) => item.classList.remove("filter-active"));
       e.target.classList.add("filter-active");
-      filterTodos(todoArr, e.target.dataset.filter);
+      filterTodos(todoArr, projectArr, e.target.dataset.filter);
     })
   );
 }
 
-export function filterTodos(arr, arg) {
+export function filterTodos(todoArr, projectArr, arg) {
   const date = new Date();
   if (arg === "all") {
-    renderTodoes(arr);
+    renderTodoes(todoArr, projectArr);
   } else if (arg === "today") {
     const today = `${date.getFullYear()}-${
       date.getMonth() + 1 <= 9
         ? "0" + (date.getMonth() + 1)
         : date.getMonth() + 1
     }-${date.getDate() <= 9 ? "0" + date.getDate() : date.getDate()}`;
-    const output = arr.filter((item) => item.date === today);
-    renderTodoes(output);
+    const output = todoArr.filter((item) => item.date === today);
+    renderTodoes(output, projectArr);
   } else if (arg === "month") {
     const month = date.getMonth() + 1;
-    const output = arr.filter(
+    const output = todoArr.filter(
       (item) => parseInt(item.date.split("-")[1]) === month
     );
-    renderTodoes(output);
+    renderTodoes(output, projectArr);
   } else if (arg === "important") {
-    const output = arr.filter((item) => item.priority === "high");
-    renderTodoes(output);
+    const output = todoArr.filter((item) => item.priority === "high");
+    renderTodoes(output, projectArr);
   } else if (arg === "completed") {
-    const output = arr.filter((item) => item.completed);
-    renderTodoes(output);
+    const output = todoArr.filter((item) => item.completed);
+    renderTodoes(output, projectArr);
   }
 }
 
@@ -254,8 +254,8 @@ function _addProjectsButtons(projectsArr, todoArr) {
       //   filter all todos and show only those that have id of the project,
       //    save them into project object contents
       project.updateProjectContents(todoArr);
-      saveProjectsToLocalStorage(projectsArr);
-      renderTodoes(project.contents);
+      //   saveProjectsToLocalStorage(projectsArr);
+      renderTodoes(project.contents, projectsArr);
     })
   );
 
@@ -320,6 +320,6 @@ export function renderSidebar(projectArr, todoArr) {
   //   append sidebar as first child of content element
   document.getElementById("content").prepend(sidebar(projectArr));
   _sidebarToggle();
-  _addFilterButtons(todoArr);
+  _addFilterButtons(todoArr, projectArr);
   _addProjectsButtons(projectArr, todoArr);
 }

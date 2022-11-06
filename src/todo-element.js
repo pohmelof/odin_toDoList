@@ -151,7 +151,13 @@ function _addTodoButtons(todoArr, projectsArr) {
         todoArr[index].edit(formData());
         renderTodoes(todoArr);
         saveTodosToLocalStorage(todoArr);
-        _filterOnChange(todoArr);
+        if (
+          [...document.querySelectorAll(".filter-btn")].filter((item) =>
+            item.classList.contains("filter-active")
+          ).length > 0
+        ) {
+          filterOnChange(todoArr);
+        }
         hideModal();
       });
       closeModalBtn();
