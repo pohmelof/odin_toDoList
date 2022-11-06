@@ -6,27 +6,62 @@ import { detailsModal } from "./details";
 import formData from "./getFormData";
 import { saveTodosToLocalStorage } from "./localStorage";
 
-// create todoElement with data-index attribute
+// create todoElement
 function todoElement(obj, index) {
   const todoItem = document.createElement("div");
   todoItem.classList.add("todo-item");
   if (obj.completed) {
     todoItem.classList.add("todo-completed");
   }
+  const checkmarkIcon = document.createElement("i");
+  checkmarkIcon.classList.add("fa-solid", "fa-check");
   const checkIcon = obj.completed ? '<i class="fa-solid fa-check"></i>' : "";
-  todoItem.innerHTML = `
-                    <div class="importance ${obj.priority}"></div>
-                    <div class="checkmark" data-index="${index}">${checkIcon}</div>
-                    <div class="todo-desc">${obj.title}</div>
-                    <button class="details" data-index="${index}">Details</button>
-                    <div class="due-date">${obj.date}</div>
-                    <button class="edit" data-index="${index}">
-                        <i class="fa-solid fa-pen-to-square"></i>
-                    </button>
-                    <button class="delete" data-index="${index}">
-                        <i class="fa-solid fa-trash"></i>
-                    </button>
-                    `;
+
+  const importance = document.createElement("div");
+  const checkmark = document.createElement("div");
+  const todoDesc = document.createElement("div");
+  const dueDate = document.createElement("div");
+  const detailsBtn = document.createElement("button");
+  const editBtn = document.createElement("button");
+  const deleteBtn = document.createElement("button");
+  const iconEdit = document.createElement("i");
+  const iconDelete = document.createElement("i");
+
+  importance.classList.add("importance", obj.priority);
+
+  checkmark.classList.add("checkmark");
+  checkmark.dataset.index = index;
+  checkmark.innerHTML = checkIcon;
+
+  todoDesc.classList.add("todo-desc");
+  todoDesc.textContent = obj.title;
+
+  detailsBtn.classList.add("details", "btn-anim");
+  detailsBtn.dataset.index = index;
+  detailsBtn.textContent = "Details";
+
+  dueDate.classList.add("due-date");
+  dueDate.textContent = obj.date;
+
+  editBtn.classList.add("edit", "btn-anim");
+  editBtn.dataset.index = index;
+  iconEdit.classList.add("fa-solid", "fa-pen-to-square");
+  editBtn.appendChild(iconEdit);
+
+  deleteBtn.classList.add("delete", "btn-anim");
+  deleteBtn.dataset.index = index;
+  iconDelete.classList.add("fa-solid", "fa-trash");
+  deleteBtn.appendChild(iconDelete);
+
+  todoItem.append(
+    importance,
+    checkmark,
+    todoDesc,
+    detailsBtn,
+    dueDate,
+    editBtn,
+    deleteBtn
+  );
 
   return todoItem;
 }

@@ -67,9 +67,6 @@ if (localStorage.getItem("todos") !== null) {
   todosArray = getTodosFromLocalStorage();
 }
 
-console.log(projects);
-console.log(todosArray);
-
 renderSidebar(projects, todosArray);
 renderTodoes(todosArray);
 

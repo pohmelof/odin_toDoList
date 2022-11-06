@@ -65,7 +65,7 @@ function projectsEl(arr) {
 
   const projectsHeading = document.createElement("div");
   projectsHeading.className = "projects-heading";
-  projectsHeading.innerHTML = `<h3>Projects:</h3><button class="btn new-project">New</button>`;
+  projectsHeading.innerHTML = `<h3>Projects:</h3><button class="btn btn-anim new-project">New</button>`;
 
   const projectsDiv = document.createElement("div");
   projectsDiv.className = "projects";
@@ -90,8 +90,8 @@ function projectsEl(arr) {
     projectBtn.dataset.index = i;
     editBtn.dataset.index = i;
     deleteBtn.dataset.index = i;
-    editBtn.className = "btn project-edit";
-    deleteBtn.className = "btn project-delete";
+    editBtn.className = "btn btn-anim project-edit";
+    deleteBtn.className = "btn btn-anim project-delete";
     projectBtn.textContent = arr[i].name;
     editBtn.innerHTML = '<i class="fa-solid fa-pen-to-square"></i>';
     deleteBtn.innerHTML = '<i class="fa-solid fa-trash"></i>';
@@ -185,6 +185,12 @@ function _sidebarToggle() {
         mobileOverlay.classList.add("overlay-hidden");
       }
     }
+  });
+
+  mobileOverlay.addEventListener("click", () => {
+    burger.classList.remove("burger-active");
+    sidebar.classList.add("sidebar-hidden");
+    mobileOverlay.classList.add("overlay-hidden");
   });
   // if window resized, reset sidebar status
   window.addEventListener("resize", () => {

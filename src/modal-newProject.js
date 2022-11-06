@@ -12,17 +12,17 @@ export default function newProject(index, edit = false) {
   form.action = "#";
   form.method = "post";
   form.dataset.index = index;
-  submitBtn.classList.add("submit");
+  submitBtn.classList.add("submit", "btn-anim");
   submitBtn.type = "submit";
   submitBtn.innerText = edit ? "Save" : "Add";
-  closeBtn.classList.add("close");
+  closeBtn.classList.add("close", "btn-anim");
   closeBtn.type = "button";
   closeBtn.innerHTML = "&#10005;";
 
   label.for = "newProject";
   label.textContent = "Project name";
   const input = document.createElement("input");
-  input.className = "newProject";
+  input.classList.add("newProject");
   input.id = "newProject";
   input.name = "newProject";
   input.required = true;

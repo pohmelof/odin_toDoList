@@ -13,18 +13,23 @@ export function detailsModal(obj) {
   closeBtn.type = "button";
   closeBtn.innerHTML = "&#10005;";
 
-  div.innerHTML = `
-  <h3>Title: </h3>
-  <p>${title}</p>
-  <h3>Description: </h3>
-  <p>${desc}</p>
-  <h3>Due date: </h3>
-  <p>${date}</p>
-  <h3>Priority: </h3>
-  <p>${priority}</p>
-  <h3>Completion: </h3>
-  <p>${completed}</p>
-  `;
+  //   get all details in array for convenience
+  const detailsArr = [
+    ["Title: ", title],
+    ["Description: ", desc],
+    ["Due date: ", date],
+    ["Priority", priority],
+    ["Completion: ", completed],
+  ];
+
+  // loop over array to render details
+  for (const item of detailsArr) {
+    const h3 = document.createElement("h3");
+    const p = document.createElement("p");
+    h3.textContent = item[0];
+    p.textContent = item[1];
+    div.append(h3, p);
+  }
 
   modal.append(h2, div, closeBtn);
 

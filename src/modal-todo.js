@@ -13,10 +13,10 @@ export function todoModal(arr, index, edit = false) {
   form.action = "#";
   form.method = "post";
   form.dataset.index = index;
-  submitBtn.classList.add("submit");
+  submitBtn.classList.add("submit", "btn-anim");
   submitBtn.type = "submit";
   submitBtn.innerText = edit ? "Save" : "Add";
-  closeBtn.classList.add("close");
+  closeBtn.classList.add("close", "btn-anim");
   closeBtn.type = "button";
   closeBtn.innerHTML = "&#10005;";
 

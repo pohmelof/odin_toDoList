@@ -12,6 +12,9 @@
     --dark-font-color: rgb(53, 53, 53);
     --light-bg-color: rgb(240, 240, 240);
     --bg-color: white;
+    --color-danger: red;
+    --color-caution: orange;
+    --color-safe: green;
 }
 
 body.dark {
@@ -28,31 +31,38 @@ body {
     padding: 0;
     background-color: var(--bg-color);
     color: var(--dark-font-color);
-    transition: all 0.3s;
+    transition: ease-in 0.2s;
+}
+
+/* transition */
+.burger-line,
+.toggle,
+.sidebar,
+main {
+    transition: ease-in 0.2s;
 }
 
 i {
     pointer-events: none;
 }
-
+/* scrollbar styles*/
 /* width */
 ::-webkit-scrollbar {
-    width: 4px;
+    width: 5px;
   }
   
   /* Track */
-  ::-webkit-scrollbar-track {
-    background: #f1f1f1;
+::-webkit-scrollbar-track {
+    background: var(--light-font-color);
   }
   
   /* Handle */
-  ::-webkit-scrollbar-thumb {
+::-webkit-scrollbar-thumb {
     background: var(--main-color);
-    border-radius: 2px;
   }
   
   /* Handle on hover */
-  ::-webkit-scrollbar-thumb:hover {
+::-webkit-scrollbar-thumb:hover {
     background: var(--accent-color);
   }
 
@@ -100,7 +110,6 @@ header {
     width: 20px;
     height: 2px;
     background-color: var(--light-font-color);
-    transition: all 0.3s;
 }
 
 .user-info {
@@ -117,11 +126,7 @@ header {
     position: relative;
 }
 
-.sun,
-.moon,
-.toggle {
-    pointer-events: none;
-}
+
 .toggle {
     position: absolute;
     top: 3px;
@@ -130,7 +135,6 @@ header {
     height: 22px;
     border-radius: 10px;
     background-color: var(--light-font-color);
-    transition: all 0.3s;
 }
 .on {
     transform: translateX(22px); 
@@ -162,7 +166,6 @@ header {
     flex-direction: column;
     min-height: calc(100vh - 60px);
     padding: 50px 30px;
-    transition: all 0.3s;
     border-right: 2px solid var(--main-color);
     overflow: auto;
 }
@@ -176,7 +179,6 @@ nav {
 }
 nav i {
     margin-right: 10px;
-    pointer-events: none;
 }
 .btn {
     padding: 10px 20px;
@@ -234,7 +236,6 @@ nav i {
 
 /* main */
 main {
-    transition: all 0.3s;
     padding-top: 60px;
 }
 .pad-left {
@@ -243,8 +244,8 @@ main {
 
 .todo-container {
     padding: 50px;
-    display: flex;
     gap: 2px;
+    display: flex;
     flex-direction: column;
     align-items: center;
 }
@@ -268,6 +269,10 @@ main {
 
     .todo-item {
         gap: 20px;
+        grid-template-columns:20px 1fr 60px 0 30px 30px;
+    }
+    .due-date {
+        overflow: hidden;
     }
 }
 
@@ -284,7 +289,6 @@ main {
 
 }
 .new-todo i {
-    pointer-events: none;
     width: 47px;
     height: 44px;
 }
@@ -304,13 +308,13 @@ main {
 }
 
 .importance.high {
-    background-color: red;
+    background-color: var(--color-danger);
 }
 .importance.mid {
-    background-color: orange;
+    background-color: var(--color-caution);
 }
 .importance.low {
-    background-color: green;
+    background-color: var(--color-safe);
 }
 
 
@@ -373,8 +377,8 @@ main {
 }
 
 .modal.delete-warning {
-    color: red;
-    border: 2px solid red;
+    color: var(--color-danger);
+    border: 2px solid;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -399,12 +403,12 @@ main {
     font-size: 20px;
 }
 .modal-deleteBtn {
-    background-color: red;
-    color: white;
+    background-color: var(--color-danger);
+    color: var(--light-font-color);
 }
 .modal-cancel {
     background-color: var(--accent-color);
-    color: white;
+    color: var(--light-font-color);
 }
 .modal-hidden {
     display: none;
@@ -433,7 +437,7 @@ main {
 .submit {
     background-color: var(--accent-color);
     color: var(--light-font-color);
-    border:none;
+    border: none;
     border-radius: 5px;
     font-weight: bold;
     padding: 10px 25px;
@@ -481,27 +485,12 @@ main {
 }
 
 /* hovers / actives */
-.details:hover,
-.edit:hover,
-.delete:hover,
-.new-todo:hover,
-.new-project:hover,
-.submit:hover,
-.modal-deleteBtn:hover,
-.modal-cancel:hover {
+
+.btn-anim:hover {
     filter: opacity(0.8);
 }
-.details:active,
-.edit:active,
-.delete:active,
-.new-todo:active,
-.new-project:active,
-.project-edit:active,
-.project-delete:active,
-.submit:active,
-.close:active,
-.modal-deleteBtn:active,
-.modal-cancel:active {
+
+.btn-anim:active {
     transform: scale(0.9);
 }
 .new-project:hover {

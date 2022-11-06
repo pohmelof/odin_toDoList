@@ -10,9 +10,9 @@ export default function deleteWarning() {
   h3.textContent = "Warning!";
   p.textContent =
     "Deleting a Project will delete all Todos in it. Are you sure?";
-  deleteBtn.classList.add("modal-deleteBtn");
+  deleteBtn.classList.add("modal-deleteBtn", "btn-anim");
   deleteBtn.textContent = "Delete";
-  cancelBtn.classList.add("modal-cancel");
+  cancelBtn.classList.add("modal-cancel", "btn-anim");
   cancelBtn.textContent = "Cancel";
 
   btnCont.append(cancelBtn, deleteBtn);
