@@ -248,6 +248,7 @@ main {
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding-bottom: 150px;
 }
 
 .todo-item {
